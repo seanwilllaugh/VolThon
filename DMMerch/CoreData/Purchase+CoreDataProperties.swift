@@ -25,6 +25,7 @@ extension Purchase {
     @NSManaged public var purchaseTime: String
     @NSManaged public var phone : String
     @NSManaged public var email : String
+    @NSManaged public var top : Date?
 
 }
 

@@ -49,13 +49,11 @@ struct ContentView: View {
                     Circle()
                         .foregroundColor(.green)
                         .frame(width: 20, height: 20)
-                        .shadow(radius: 5)
                     Text("Cash: $\(cashTotal)")
                     Spacer()
                     Circle()
                         .foregroundColor(.blue)
                         .frame(width: 20, height: 20)
-                        .shadow(radius: 5)
                     Text("Venmo: $\(venmoTotal)")
                     Spacer()
                 }
@@ -71,11 +69,11 @@ struct ContentView: View {
                         .foregroundColor(Color.white)
                         .frame(width: 300, height:100)
                         .background(Rectangle())
-                        .foregroundColor(.orange)
+                        .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
                         .cornerRadius(15)
                 }
                 .padding(.bottom, 20.0)
-                .shadow(radius: 5)
+                .shadow(color: Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, radius: 5)
                 
                 NavigationLink{
                     InventoryView().preferredColorScheme(.light)
@@ -86,11 +84,11 @@ struct ContentView: View {
                         .foregroundColor(Color.white)
                         .frame(width: 300, height:100)
                         .background(Rectangle())
-                        .foregroundColor(.orange)
+                        .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
                         .cornerRadius(15)
                 }
                 .padding(.bottom, 20.0)
-                .shadow(radius: 5)
+                .shadow(color: Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, radius: 5)
                 
                 NavigationLink{
                     TransactionsView().preferredColorScheme(.light)
@@ -101,11 +99,11 @@ struct ContentView: View {
                         .foregroundColor(Color.white)
                         .frame(width: 300, height:100)
                         .background(Rectangle())
-                        .foregroundColor(.orange)
+                        .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
                         .cornerRadius(15)
                 }
                 .padding(.bottom, 20.0)
-                .shadow(radius: 5)
+                .shadow(color: Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, radius: 5)
                 
                 
                 Spacer()
@@ -126,12 +124,12 @@ struct ContentView: View {
                                 .foregroundColor(Color.white)
                                 .frame(width: 80, height: 80)
                                 .background(Circle())
-                                .foregroundColor(.orange)
+                                .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
                                 .cornerRadius(15)
                         }
                         .padding(.bottom, 20.0)
                         .padding(.leading)
-                        .shadow(radius: 5)
+                        .shadow(color: Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, radius: 5)
                         
                         Spacer()
                     }

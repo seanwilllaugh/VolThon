@@ -23,6 +23,7 @@ extension Item {
     @NSManaged public var sizes: String?
     @NSManaged public var type: String?
     @NSManaged public var image: Data?
+    @NSManaged public var sold: Int16
 
 }
 

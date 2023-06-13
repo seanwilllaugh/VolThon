@@ -3546,7 +3546,7 @@ let jsonData = """
   },
   {
     "name": "Pastel Blue",
-    "hex": "#AEC6CF"
+    "hex": "#BDE0FE"
   },
   {
     "name": "Pastel Brown",
@@ -3574,7 +3574,7 @@ let jsonData = """
   },
   {
     "name": "Pastel Purple",
-    "hex": "#B39EB5"
+    "hex": "#CDB4DB"
   },
   {
     "name": "Pastel Red",

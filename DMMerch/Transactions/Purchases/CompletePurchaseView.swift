@@ -11,6 +11,7 @@ import Foundation
 struct CompletePurchaseView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss
+    @FetchRequest(sortDescriptors: [], animation: .default) var invitems: FetchedResults<Item>
 
     @State private var showingDeleteAlert = false
     
@@ -21,6 +22,7 @@ struct CompletePurchaseView: View {
     @State private var totalItems  = 0
     @State private var totalPrice  = 0
     @State private var method      = "Venmo"
+    @State private var dateofpurchase = Date()
     
     let methods = ["Venmo", "Cash"]
     
@@ -65,6 +67,12 @@ struct CompletePurchaseView: View {
                                 .font(.system(size: 16))
                         }
                     }.pickerStyle(SegmentedPickerStyle())
+                    
+                    
+                }
+                
+                Section{
+                    DatePicker("Select a date", selection: $dateofpurchase, displayedComponents: .date)
                 }
                 
                 Section{
@@ -127,6 +135,12 @@ struct CompletePurchaseView: View {
                         
                         for item in Cart{
                             items.append("\(item.itemQuantity!),\(item.itemName!),\(item.itemColor!),\(item.itemSize!);")
+                            
+                            if let invitem = invitems.first(where: {$0.name == item.itemName!})
+                            {
+                                invitem.sold = invitem.sold + Int16(item.itemQuantity!)
+                                print("Sold \(invitem.sold) \(invitem.name!)")
+                            }
                         }
                         
                         print("Cart: \(items)")
@@ -147,6 +161,7 @@ struct CompletePurchaseView: View {
                         
                         dateFormatter.dateFormat = "MMM d, YYYY - hh:mm"
                         
+                        newPurchase.top          = dateofpurchase
                         newPurchase.purchaseTime = dateFormatter.string(from:date)
                         
                         try? viewContext.save()
