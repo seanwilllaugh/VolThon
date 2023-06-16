@@ -26,7 +26,7 @@ extension Purchase {
     @NSManaged public var phone : String
     @NSManaged public var email : String
     @NSManaged public var top : Date?
-
+    @NSManaged public var tag : String?
 }
 
 extension Purchase : Identifiable {

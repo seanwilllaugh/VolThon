@@ -12,6 +12,7 @@ struct CompletePurchaseView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss
     @FetchRequest(sortDescriptors: [], animation: .default) var invitems: FetchedResults<Item>
+    @FetchRequest(sortDescriptors: [], animation: .default) var tags: FetchedResults<Tag>
 
     @State private var showingDeleteAlert = false
     
@@ -21,10 +22,17 @@ struct CompletePurchaseView: View {
     @State private var items       = ""
     @State private var totalItems  = 0
     @State private var totalPrice  = 0
+    @State private var tag         = ""
     @State private var method      = "Venmo"
     @State private var dateofpurchase = Date()
     
+    @State private var tagName  = ""
+    @State private var tagStart = Date()
+    @State private var tagEnd   = Date()
+    
     let methods = ["Venmo", "Cash"]
+    
+    var hexColors = readColors()
     
     @Binding var Cart : [cartItem]
     
@@ -43,13 +51,79 @@ struct CompletePurchaseView: View {
         }
     }
     
+    func saveTag(){
+        let newTag = Tag(context: viewContext)
+        
+        newTag.id        = UUID()
+        newTag.name      = tagName
+        newTag.dateStart = tagStart
+        newTag.dateEnd   = tagEnd
+        
+        try? viewContext.save()
+    }
+    
     var body: some View{
         NavigationView {
             Form{
                 Section{
+                    HStack{
+                        Text("")
+                        Spacer()
+                        Text("Personal Information")
+                            .font(.title2)
+                            .fontWeight(.medium)
+                            .fontDesign(.rounded)
+                        Spacer()
+                    }
+                    
                     TextField("Name"                    , text: $buyerName)
                     TextField("Phone Number (Optional)" , text: $buyerNumber)
                     TextField("Email Address (Optional)", text: $buyerEmail)
+                    DatePicker("Date of Transaction", selection: $dateofpurchase, displayedComponents: .date)
+                }
+                
+                Section{
+                    HStack{
+                        Text("")
+                        Spacer()
+                        Text("Select a Tag")
+                            .font(.title2)
+                            .fontWeight(.medium)
+                            .fontDesign(.rounded)
+                        Spacer()
+                    }
+                    
+                    Picker("Tag", selection: $tag)
+                    {
+                        ForEach(tags){ tag in
+                            Text(tag.name ?? "n/a")
+                        }
+                    }
+                    
+                    HStack{
+                        Text("")
+                        Spacer()
+                        Text("Create a Tag")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .fontDesign(.rounded)
+                        Spacer()
+                    }
+                    
+                    TextField("Tag Name", text: $tagName)
+                    DatePicker("Select tag START date", selection: $tagStart, displayedComponents: .date)
+                    DatePicker("Select tag END date", selection: $tagEnd, displayedComponents: .date)
+                    
+                    Button{
+                        saveTag()
+                    } label: {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
+                            .overlay(
+                                Text("Save Tag")
+                                    .foregroundColor(.white)
+                            )
+                    }
                 }
                 
                 Section{
@@ -57,6 +131,9 @@ struct CompletePurchaseView: View {
                         Text("")
                         Spacer()
                         Text("Payment Method")
+                            .font(.title2)
+                            .fontWeight(.medium)
+                            .fontDesign(.rounded)
                         Spacer()
                     }
                     Picker("Payment Method", selection: $method)
@@ -69,10 +146,6 @@ struct CompletePurchaseView: View {
                     }.pickerStyle(SegmentedPickerStyle())
                     
                     
-                }
-                
-                Section{
-                    DatePicker("Select a date", selection: $dateofpurchase, displayedComponents: .date)
                 }
                 
                 Section{
@@ -166,6 +239,7 @@ struct CompletePurchaseView: View {
                         
                         try? viewContext.save()
                         
+                        Cart = [cartItem]()
                         print("Successfully completed \(buyerName)'s purchase")
                         
                         dismiss()

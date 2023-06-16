@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		513E12DD2A391174001107CF /* Tag+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513E12DB2A391174001107CF /* Tag+CoreDataClass.swift */; };
+		513E12DE2A391174001107CF /* Tag+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513E12DC2A391174001107CF /* Tag+CoreDataProperties.swift */; };
+		513E12E02A3A04FD001107CF /* ExportCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513E12DF2A3A04FD001107CF /* ExportCSV.swift */; };
 		513F96B9299FD12700E9DCC2 /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513F96B8299FD12700E9DCC2 /* AddItemView.swift */; };
 		513F96BB299FD15400E9DCC2 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 513F96BA299FD15400E9DCC2 /* DetailView.swift */; };
 		51405B5C29F4F819005841E6 /* csvExport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51405B5B29F4F819005841E6 /* csvExport.swift */; };
@@ -38,6 +41,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		513E12DB2A391174001107CF /* Tag+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataClass.swift"; sourceTree = "<group>"; };
+		513E12DC2A391174001107CF /* Tag+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tag+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		513E12DF2A3A04FD001107CF /* ExportCSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCSV.swift; sourceTree = "<group>"; };
 		513F96B8299FD12700E9DCC2 /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		513F96BA299FD15400E9DCC2 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		51405B5B29F4F819005841E6 /* csvExport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = csvExport.swift; sourceTree = "<group>"; };
@@ -85,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				516FEB4629CE0A3B0082E9FB /* StatisticsView.swift */,
+				513E12DF2A3A04FD001107CF /* ExportCSV.swift */,
 				51405B5B29F4F819005841E6 /* csvExport.swift */,
 			);
 			path = Statistics;
@@ -168,6 +175,8 @@
 			children = (
 				51698E6A29BA39F8007E58B0 /* Item+CoreDataClass.swift */,
 				51698E6B29BA39F8007E58B0 /* Item+CoreDataProperties.swift */,
+				513E12DB2A391174001107CF /* Tag+CoreDataClass.swift */,
+				513E12DC2A391174001107CF /* Tag+CoreDataProperties.swift */,
 				518CF2C329A3DC8E005A46A6 /* Purchase+CoreDataClass.swift */,
 				518CF2C429A3DC8E005A46A6 /* Purchase+CoreDataProperties.swift */,
 				51BCA79F299E912400F746E8 /* Persistence.swift */,
@@ -268,12 +277,15 @@
 				51E432A329A1A3CE00D60D33 /* InventoryView.swift in Sources */,
 				51E432A729A1A3E800D60D33 /* TransactionsView.swift in Sources */,
 				51C8DE6229F6C48D0080E3C9 /* DMMerch.xcdatamodeld in Sources */,
+				513E12DE2A391174001107CF /* Tag+CoreDataProperties.swift in Sources */,
+				513E12DD2A391174001107CF /* Tag+CoreDataClass.swift in Sources */,
 				518CF2C629A3DC8E005A46A6 /* Purchase+CoreDataProperties.swift in Sources */,
 				51E432B029A3D20200D60D33 /* CompletePurchaseView.swift in Sources */,
 				51BCA799299E912300F746E8 /* ContentView.swift in Sources */,
 				516E95C629A554CC0069259F /* StepperStyle.swift in Sources */,
 				51698E6C29BA39F8007E58B0 /* Item+CoreDataClass.swift in Sources */,
 				51E432AC29A1A80700D60D33 /* PurchaseRow.swift in Sources */,
+				513E12E02A3A04FD001107CF /* ExportCSV.swift in Sources */,
 				516FEB4729CE0A3B0082E9FB /* StatisticsView.swift in Sources */,
 				518CF2C529A3DC8E005A46A6 /* Purchase+CoreDataClass.swift in Sources */,
 				51E432AE29A322FE00D60D33 /* CartItemStruct.swift in Sources */,
