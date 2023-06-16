@@ -13,6 +13,8 @@ struct ExportCSV: View {
     @Environment(\.managedObjectContext) var viewContext
     
     @State var sortedPurchases: [Purchase]
+    @FetchRequest(sortDescriptors: [], animation: .default) var items: FetchedResults<Item>
+    @FetchRequest(sortDescriptors: [], animation: .default) var tags: FetchedResults<Tag>
     @State private var typeList = ["Clothing", "Buttons", "Flowers", "Bags", "Stickers", "Bottles", "Other"]
     
     var hexColors = readColors()
@@ -20,7 +22,7 @@ struct ExportCSV: View {
     @State var csvFileURL = URL(string: "www.seanwlaughlin.com")
     
     @State private var filterType   = false
-    @State private var selectedType = [""]
+    @State private var selectedType = ""
     
     @State private var filterTag   = false
     @State private var selectedTag = ""
@@ -30,6 +32,7 @@ struct ExportCSV: View {
     @State private var selectedEnd   = Date()
     
     @State private var filterItem  = false
+    @State private var selectedItem = ""
     
     @State private var filterBuyer = false
     @State private var selectedBuyer = ""
@@ -58,7 +61,9 @@ struct ExportCSV: View {
                         Toggle("Type", isOn: $filterType)
                         if(filterType){
                             Picker("Select Item Type(s)", selection: $selectedType){
-                                
+                                ForEach(typeList, id: \.self){
+                                    Text("\($0)")
+                                }
                             }
                         }
                     }
@@ -66,7 +71,12 @@ struct ExportCSV: View {
                     Section{
                         Toggle("Tag", isOn: $filterTag)
                         if(filterTag){
-                            Text("yuh")
+                            Picker("Select a Tag", selection: $selectedTag){
+                                ForEach(tags.indices, id: \.self){ index in
+                                    Text("\(tags[index].name!)")
+                                        .tag(tags[index].name!)
+                                }
+                            }
                         }
                     }
                     
@@ -82,7 +92,13 @@ struct ExportCSV: View {
                     Section{
                         Toggle("Item", isOn: $filterItem)
                         if(filterItem){
-                            Text("yuh")
+                            Picker("Select Item(s)", selection: $selectedItem){
+                                ForEach(items.indices, id: \.self){ index in
+                                    Text("\(items[index].name!)")
+                                        .tag(items[index].name!)
+                                }
+                            }
+                            .pickerStyle(.navigationLink)
                         }
                     }
                     
@@ -90,8 +106,9 @@ struct ExportCSV: View {
                         Toggle("Individual", isOn: $filterBuyer)
                         if(filterBuyer){
                             Picker("Select an Individual", selection: $selectedBuyer){
-                                ForEach(sortedPurchases){ purchase in
-                                    Text(purchase.buyer!)
+                                ForEach(sortedPurchases.indices, id: \.self){ index in
+                                    Text(sortedPurchases[index].buyer!)
+                                        .tag(sortedPurchases[index].buyer!)
                                 }
                             }
                             .pickerStyle(.navigationLink)
@@ -144,8 +161,20 @@ struct ExportCSV: View {
             
             if(filterType){
                 filterNone = false
+                var pass = false
                 
-                if(purchase.top! > selectedStart && purchase.top! < selectedEnd){
+                let allUnformattedItems = String(purchase.items!).split(separator: ";")
+                
+                for item in allUnformattedItems{
+                    let oneUnformattedItem = item.split(separator: ",")
+                    let item = items.first(where: {$0.name == String(oneUnformattedItem[1])})
+                    if(item!.type! == selectedType){
+                        pass = true
+                        break
+                    }
+                }
+                
+                if(pass){
                     let total = "\(purchase.totalPrice)"
                     let itemsnum = "\(purchase.totalItems)"
                     
@@ -154,7 +183,6 @@ struct ExportCSV: View {
                         csvString.append(csvLine)
                     }
                     
-                    let allUnformattedItems = String(purchase.items!).split(separator: ";")
                     for item in allUnformattedItems{
                         let oneUnformattedItem = item.split(separator: ",")
                         let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
@@ -207,8 +235,19 @@ struct ExportCSV: View {
             
             if(filterItem){
                 filterNone = false
+                var pass = false
                 
-                if(purchase.top! > selectedStart && purchase.top! < selectedEnd){
+                let allUnformattedItems = String(purchase.items!).split(separator: ";")
+                
+                for item in allUnformattedItems{
+                    let oneUnformattedItem = item.split(separator: ",")
+                    if(oneUnformattedItem[1] == selectedItem){
+                        pass = true
+                        break
+                    }
+                }
+                
+                if(pass){
                     let total = "\(purchase.totalPrice)"
                     let itemsnum = "\(purchase.totalItems)"
                     
@@ -217,7 +256,6 @@ struct ExportCSV: View {
                         csvString.append(csvLine)
                     }
                     
-                    let allUnformattedItems = String(purchase.items!).split(separator: ";")
                     for item in allUnformattedItems{
                         let oneUnformattedItem = item.split(separator: ",")
                         let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
