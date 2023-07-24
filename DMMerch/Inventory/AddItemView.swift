@@ -12,6 +12,7 @@ import UIKit
 struct AddItemView: View{
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.name)], animation: .default) var types: FetchedResults<ItemType>
     
     let columns = [
             GridItem(.flexible()),
@@ -28,8 +29,6 @@ struct AddItemView: View{
     @State private var onecolor  = ""
     @State private var colorlist = [""]
     @State private var color     = ""
-    
-    @State private var typeList = ["Select-Item-Type","Clothing", "Buttons", "Flowers", "Bags", "Stickers", "Bottles", "Other"]
     
     @State private var size     = ""
     @State private var sizelist = [""]
@@ -60,25 +59,25 @@ struct AddItemView: View{
         let newItem = Item(context: viewContext)
         
         if(xsmall){
-            sizelist.append("X-Small")
+            sizelist.append("XS")
         }
         if(small){
-            sizelist.append("Small")
+            sizelist.append("SM")
         }
         if(medium){
-            sizelist.append("Medium")
+            sizelist.append("MD")
         }
         if(large){
-            sizelist.append("Large")
+            sizelist.append("LG")
         }
         if(xlarge){
-            sizelist.append("X-Large")
+            sizelist.append("XL")
         }
         if(xxlarge){
-            sizelist.append("XX-Large")
+            sizelist.append("XXL")
         }
         if(onesize){
-            sizelist.append("One Size")
+            sizelist.append("OS")
         }
         
         var i = 0
@@ -115,6 +114,13 @@ struct AddItemView: View{
         newItem.price = Int16(price)
         newItem.image = inputImage!.pngData()
         
+        for typeName in types{
+            if(type == typeName.name!){
+                typeName.typeCount = typeName.typeCount + 1
+                break
+            }
+        }
+        
         try? viewContext.save()
         dismiss()
     }
@@ -128,8 +134,9 @@ struct AddItemView: View{
                 
                 Section(header: Text("Item Type")){
                     Picker("Choose Item's Type", selection: $type){
-                        ForEach(typeList, id: \.self) {
-                            Text("\($0)")
+                        ForEach(types.indices, id: \.self) { index in
+                            Text("\(types[index].name!)")
+                                .tag(types[index].name!)
                         }
                     }
                 }

@@ -117,39 +117,3 @@ struct PurchaseRow: View {
         })
     }
 }
-
-func AddtoCart(item: Item, Quantity: Int, Color: String, Size: String)->cartItem
-{
-    print("AddtoCart called")
-    
-    var newItem        = cartItem()
-    var purchaseString = String()
-    
-    purchaseString.append("\(item.name!);")
-    purchaseString.append("\(Quantity);")
-    purchaseString.append("\(Int(item.price) * Quantity);")
-    purchaseString.append("\(Color);")
-    purchaseString.append("\(Size);")
-    
-    newItem.itemName     = item.name!
-    newItem.itemQuantity = Quantity
-    newItem.itemPrice    = Int(item.price) * Quantity
-    newItem.itemColor    = Color
-    newItem.itemSize     = Size
-    
-    
-    
-    return newItem
-}
-
-struct PurchaseRow_Previews: PreviewProvider {
-    static let viewContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-    
-    static var previews: some View {
-        let item = Item(context: viewContext)
-
-        return NavigationView {
-            DetailView(item: item)
-        }
-    }
-}

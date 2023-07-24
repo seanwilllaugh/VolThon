@@ -2038,7 +2038,7 @@ let jsonData = """
   },
   {
     "name": "Gray",
-    "hex": "#808080"
+    "hex": "#D9D9D9"
   },
   {
     "name": "Gray (HTML/CSS Gray)",
@@ -5275,6 +5275,14 @@ let jsonData = """
   {
     "name": "Zomp",
     "hex": "#39A78E"
+  },
+  {
+    "name": "Size Gray",
+    "hex": "#F0F0F0"
+  },
+  {
+    "name": "Other Gray",
+    "hex": "#AAAAAA"
   }
 ]
 

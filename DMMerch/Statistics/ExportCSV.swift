@@ -158,143 +158,96 @@ struct ExportCSV: View {
     private func createCSVContent() -> String {
         var csvString = "Time of Purchase,Name,Total,# of Items\n"
         for purchase in sortedPurchases {
+            var pass = false
+            var csvBuyerLine = ""
+            
+            let total = "\(purchase.totalPrice)"
+            let itemsnum = "\(purchase.totalItems)"
+            
+            if let top = purchase.top, let buyer = purchase.buyer {
+                csvBuyerLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
+            }
+            
+            let allUnformattedItems = String(purchase.items!).split(separator: ";")
             
             if(filterType){
-                filterNone = false
-                var pass = false
-                
-                let allUnformattedItems = String(purchase.items!).split(separator: ";")
-                
                 for item in allUnformattedItems{
                     let oneUnformattedItem = item.split(separator: ",")
                     let item = items.first(where: {$0.name == String(oneUnformattedItem[1])})
                     if(item!.type! == selectedType){
                         pass = true
-                        break
-                    }
-                }
-                
-                if(pass){
-                    let total = "\(purchase.totalPrice)"
-                    let itemsnum = "\(purchase.totalItems)"
-                    
-                    if let top = purchase.top, let buyer = purchase.buyer {
-                        let csvLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
-                        csvString.append(csvLine)
-                    }
-                    
-                    for item in allUnformattedItems{
-                        let oneUnformattedItem = item.split(separator: ",")
-                        let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
-                        csvString.append(csvLine)
                     }
                 }
             }
             
-            if(filterTag){
-                filterNone = false
-                
-                if(purchase.tag! == selectedTag){
-                    let total = "\(purchase.totalPrice)"
-                    let itemsnum = "\(purchase.totalItems)"
-                    
-                    if let top = purchase.top, let buyer = purchase.buyer {
-                        let csvLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
-                        csvString.append(csvLine)
-                    }
-                    
-                    let allUnformattedItems = String(purchase.items!).split(separator: ";")
-                    for item in allUnformattedItems{
-                        let oneUnformattedItem = item.split(separator: ",")
-                        let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
-                        csvString.append(csvLine)
-                    }
-                }
-            }
-            
-            if(filterDate){
-                filterNone = false
-                
-                if(purchase.top! > selectedStart && purchase.top! < selectedEnd){
-                    let total = "\(purchase.totalPrice)"
-                    let itemsnum = "\(purchase.totalItems)"
-                    
-                    if let top = purchase.top, let buyer = purchase.buyer {
-                        let csvLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
-                        csvString.append(csvLine)
-                    }
-                    
-                    let allUnformattedItems = String(purchase.items!).split(separator: ";")
-                    for item in allUnformattedItems{
-                        let oneUnformattedItem = item.split(separator: ",")
-                        let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
-                        csvString.append(csvLine)
-                    }
-                }
+            if(!pass){
+                continue
             }
             
             if(filterItem){
-                filterNone = false
-                var pass = false
-                
-                let allUnformattedItems = String(purchase.items!).split(separator: ";")
-                
+                pass = false
                 for item in allUnformattedItems{
                     let oneUnformattedItem = item.split(separator: ",")
                     if(oneUnformattedItem[1] == selectedItem){
                         pass = true
-                        break
                     }
                 }
-                
-                if(pass){
-                    let total = "\(purchase.totalPrice)"
-                    let itemsnum = "\(purchase.totalItems)"
-                    
-                    if let top = purchase.top, let buyer = purchase.buyer {
-                        let csvLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
-                        csvString.append(csvLine)
-                    }
-                    
-                    for item in allUnformattedItems{
-                        let oneUnformattedItem = item.split(separator: ",")
-                        let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
-                        csvString.append(csvLine)
-                    }
+            }
+            
+            if(!pass){
+                continue
+            }
+            
+            if(filterTag){
+                if(purchase.tag == selectedTag){
+                    pass = true
+                }else{
+                    pass = false
+                    continue
                 }
+            }
+            
+            if(!pass){
+                continue
+            }
+            
+            if(filterDate){
+                if(purchase.top! > selectedStart && purchase.top! < selectedEnd){
+                    pass = true
+                }else{
+                    pass = false
+                    continue
+                }
+            }
+            
+            if(!pass){
+                continue
             }
             
             if(filterBuyer){
-                filterNone = false
-                
                 if(purchase.buyer! == selectedBuyer){
-                    let total = "\(purchase.totalPrice)"
-                    let itemsnum = "\(purchase.totalItems)"
-                    
-                    if let top = purchase.top, let buyer = purchase.buyer {
-                        let csvLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
-                        csvString.append(csvLine)
-                    }
-                    
-                    let allUnformattedItems = String(purchase.items!).split(separator: ";")
-                    for item in allUnformattedItems{
-                        let oneUnformattedItem = item.split(separator: ",")
-                        let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"
-                        csvString.append(csvLine)
-                    }
+                    pass = true
+                }else{
+                    pass = false
+                    continue
                 }
             }
             
+            if(!pass){
+                continue
+            }
+            
             if(filterNone){
-                let total = "\(purchase.totalPrice)"
-                let itemsnum = "\(purchase.totalItems)"
+                pass = true
+            }
+            
+            if(!pass){
+                continue
+            }
+            
+            if(pass){
+                csvString.append(csvBuyerLine)
                 
-                if let top = purchase.top, let buyer = purchase.buyer {
-                    let csvLine = "\(top),\(buyer),\(total),\(itemsnum)\n"
-                    csvString.append(csvLine)
-                }
-                
-                let allUnformattedItems = String(purchase.items!).split(separator: ";")
                 for item in allUnformattedItems{
                     let oneUnformattedItem = item.split(separator: ",")
                     let csvLine = "\(oneUnformattedItem[0]),\(oneUnformattedItem[1]),\(oneUnformattedItem[2]),\(oneUnformattedItem[3])\n"

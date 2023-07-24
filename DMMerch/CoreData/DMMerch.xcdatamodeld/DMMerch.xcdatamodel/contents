@@ -10,6 +10,12 @@
         <attribute name="sold" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="type" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="ItemType" representedClassName="ItemType" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="typeCount" attributeType="Integer 16" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="typeSales" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
     <entity name="Purchase" representedClassName="Purchase" syncable="YES">
         <attribute name="buyer" optional="YES" attributeType="String"/>
         <attribute name="email" optional="YES" attributeType="String"/>

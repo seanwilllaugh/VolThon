@@ -32,7 +32,7 @@ struct EditItemView: View{
     @State private var colorlist = [""]
     @State private var color     = ""
     
-    @State private var typeList = ["Clothing", "Buttons", "Flowers", "Bags", "Stickers", "Bottles", "Other"]
+    @State private var typeList = ["T-Shirts", "Hoodies", "Sweatshirts", "Pants", "Totes/Bags", "Buttons", "Flowers", "Bags", "Stickers", "Bottles", "Other"]
     
     @State private var size     = ""
     @State private var sizelist = [""]

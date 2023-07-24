@@ -40,16 +40,13 @@ struct InventoryRow: View {
                 .background(
                     Circle()
                         .frame(width:45, height: 45)
-                        .foregroundColor(.orange)
+                        .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors)))
                         .shadow(radius: 5)
                 )
-                //.font(.system(size: 20))
                 .padding(.leading)
                 .padding(.trailing)
                 .fixedSize()
                 .frame(width: 60, height: 60)
-                
-                //.offset(x:-75)
             
             VStack{
                 Text(item.name!)

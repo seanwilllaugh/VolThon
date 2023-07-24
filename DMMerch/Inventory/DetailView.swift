@@ -12,6 +12,7 @@ import Foundation
 struct DetailView: View {
     @Environment(\.managedObjectContext) var viewContext
     @Environment(\.dismiss) var dismiss
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.typeCount, order: .reverse)], animation: .default) var types: FetchedResults<ItemType>
     
     @State var cell  = ["0", "1"]
     
@@ -26,8 +27,14 @@ struct DetailView: View {
     let hexColors = readColors()
     
     func deleteBook() {
+        for type in types{
+            if(item.type == type.name){
+                type.typeCount = type.typeCount - 1
+                break
+            }
+        }
+        
         viewContext.delete(item)
-
         // try? moc.save() // uncomment this line to make the deletion permanent
         dismiss()
     }
@@ -68,7 +75,6 @@ struct DetailView: View {
                     .fontWeight(.light)
                 Spacer()
             }
-            .offset(y: -100)
             
             HStack{
                 Text(item.type!)
@@ -76,9 +82,8 @@ struct DetailView: View {
                     .padding(.leading)
                 Spacer()
             }
-            .offset(y: -100)
             
-            HStack{
+            HStack(alignment:.top){
                 Image(uiImage: image)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -86,66 +91,66 @@ struct DetailView: View {
                     .overlay{
                         Rectangle().stroke(.white, lineWidth: 7)
                     }
-                    .frame(width: 350, height: 350)
-                    .offset(y: -105)
+                    .frame(width: 350)
+                    .frame(maxHeight: 300)
                     .shadow(radius: 5)
                     .padding(.leading)
+                    .padding(.top)
                 
                 Spacer()
                 
-                VStack{
-                    Text("Available Colors")
-                        .padding(.leading)
-                        .font(.system(size: 24))
-                        .fontWeight(.semibold)
-                        .offset(x: -8, y: -115)
-                    ForEach(Colors, id: \.self){ color in
-                        HStack{
-                            Circle()
-                                .frame(width:25, height:25)
-                                .shadow(radius: 5)
-                                .foregroundColor(Color(hex: findHex(color: color, hexColors: hexColors)) ?? .black)
-                                .offset(y: -115)
-                                .padding(.leading, 30)
-                                .padding(.trailing)
-                            Text(color)
-                                .offset(y: -115)
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(.gray)
+                    .frame(width: 450, height: 300)
+                    .overlay{
+                        VStack(alignment: .center){
+                            Text("Available Colors")
+                                .padding(.top)
+                                .font(.system(size: 24))
+                                .fontWeight(.semibold)
+                                .fontDesign(.rounded)
+                            ForEach(Colors, id: \.self){ color in
+                                HStack{
+                                    Circle()
+                                        .frame(width:25, height:25)
+                                        .shadow(radius: 5)
+                                        .foregroundColor(Color(hex: findHex(color: color, hexColors: hexColors)) ?? .black)
+                                        .padding(.trailing)
+                                    Text(color)
+                                        .font(.system(size: 16))
+                                        .fontDesign(.rounded)
+                                        .frame(width: 100, alignment: .center)
+                                }
+                                .frame(width: 150)
+                                //.border(.red)
+                            }
+                            
                             Spacer()
+                            
+                            VStack{
+                                Text("Sizes")
+                                    .padding(.top)
+                                    .font(.system(size: 24))
+                                    .fontWeight(.semibold)
+                                    .fontDesign(.rounded)
+                                HStack{
+                                    ForEach(Sizes, id: \.self){ size in
+                                        Text(size)
+                                            .font(.system(size: 16))
+                                            .fontDesign(.rounded)
+                                    }
+                                }
+                            }
+                            .frame(height: 75)
+                            .padding(.bottom)
                         }
-                        .frame(width:200, alignment: .leading)
                     }
-                }
-                .frame(width: 200, height: 310, alignment: .top)
-                .padding(.leading)
-                .padding(.trailing)
+                    .padding(.top)
                 
-                Spacer()
-                
-                VStack{
-                    Text("Sizes")
-                        .padding(.leading)
-                        .font(.system(size: 24))
-                        .fontWeight(.semibold)
-                        .offset(x: -8, y: -115)
-                    ForEach(Sizes, id: \.self){ size in
-                        Text(size)
-                            .offset(y: -115)
-                            .padding(.leading)
-                    }
-                }
-                .frame(width: 200, height: 310, alignment: .top)
-                .padding(.trailing)
                 Spacer()
             }
             
-            Text("Inventory")
-                .fontWeight(.bold)
-                .underline()
-                .offset(y:-105)
-                .frame(width: 845, alignment: .leading)
-            
-            
-            
+            Spacer()
         }
         .navigationTitle(item.name!)
         .background(Image("Background"))
