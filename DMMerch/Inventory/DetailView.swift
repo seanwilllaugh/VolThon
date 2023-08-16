@@ -47,21 +47,6 @@ struct DetailView: View {
         return UIImage(data: item.image!)!
     }
     
-    func seperateColors()->[String]{
-        let colorsConverted = item.colors!
-        
-        let new = colorsConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
-    
-    func seperateSizes()->[String]{
-        let sizesConverted = item.sizes!
-        
-        let new = sizesConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
     
     var body: some View {
         VStack() {
@@ -156,8 +141,6 @@ struct DetailView: View {
         .background(Image("Background"))
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: {
-            Colors = seperateColors()
-            Sizes  = seperateSizes()
             image = loadImage()
         })
         .alert("Delete Item", isPresented: $showingDeleteAlert) {

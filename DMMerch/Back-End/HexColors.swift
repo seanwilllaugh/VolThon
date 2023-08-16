@@ -5283,6 +5283,10 @@ let jsonData = """
   {
     "name": "Other Gray",
     "hex": "#AAAAAA"
+  },
+  {
+    "name": "Tag Gray",
+    "hex": "#F2F2F7"
   }
 ]
 

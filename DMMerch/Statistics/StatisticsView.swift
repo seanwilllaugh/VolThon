@@ -126,7 +126,7 @@ struct StatisticsView: View {
                             Spacer()
                             HStack {
                                 Spacer()
-                                Chart {
+                                Chart{
                                     ForEach(sortedPurchases) { purchase in
                                         LineMark(
                                             x: .value("date", purchase.top!, unit: .day),

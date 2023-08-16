@@ -14,4 +14,6 @@ struct cartItem: Hashable{
     var itemColor    : String?
     var itemSize     : String?
     var itemType     : String?
+    
+    var size         : ItemSize?
 }

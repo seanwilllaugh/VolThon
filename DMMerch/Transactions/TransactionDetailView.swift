@@ -57,7 +57,7 @@ struct TransactionDetailView: View {
                     .fontWeight(.bold)
                     .padding(.leading)
                 
-                Text("\(transaction.purchaseTime)")
+                Text("\(transaction.purchaseTime ?? "n/a")")
                     .offset(y:9)
                 
                 Spacer()
@@ -76,30 +76,17 @@ struct TransactionDetailView: View {
                             .padding(.top)
                             .padding(.trailing)
                     }
-                    if(transaction.phone == "")
-                    {
-                        Text("Unknown Phone")
-                            .font(.system(size:20))
-                            .fontWeight(.light)
-                            .padding(.trailing)
-                    }else{
-                        Text(transaction.phone)
-                            .font(.system(size: 20))
-                            .fontWeight(.light)
-                            .padding(.trailing)
-                    }
-                    if(transaction.email == "")
-                    {
-                        Text("Unknown Email")
+                    
+                    Text(transaction.phone ?? "n/a")
+                        .font(.system(size: 20))
+                        .fontWeight(.light)
+                        .padding(.trailing)
+                    
+                    Text(transaction.email ?? "n/a")
                             .font(.system(size: 14))
                             .fontWeight(.light)
                             .padding(.trailing)
-                    }else{
-                        Text(transaction.email)
-                            .font(.system(size: 14))
-                            .fontWeight(.light)
-                            .padding(.trailing)
-                    }
+                    
                 }
                 .padding(.trailing)
             }

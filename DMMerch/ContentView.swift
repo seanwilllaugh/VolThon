@@ -15,6 +15,11 @@ struct ContentView: View {
     
     @State private var shwoingAddScreen = false
     
+    // 0 = NewPurchase, 1 = Inventory, 2 = RecentTransactions, 3 = Statistics
+    @State private var detailScreen = 0
+    
+    @State private var visibility: NavigationSplitViewVisibility = .all
+    
     @State var Total      = 0
     @State var cashTotal  = 0
     @State var venmoTotal = 0
@@ -32,7 +37,7 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationSplitView{
+        NavigationSplitView(columnVisibility: $visibility){
             Image("OrgName")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
@@ -60,23 +65,28 @@ struct ContentView: View {
                 //.padding(.bottom, 20.0)
                 .offset(y:-20)
                 
-                NavigationLink{
-                    NewPurchaseView().preferredColorScheme(.light)
+                Button{
+                    detailScreen = 0
+                    
+                    visibility = .detailOnly
                 } label: {
-                    Text("New Purchase")
-                        .fixedSize()
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color.white)
-                        .frame(width: 300, height:100)
-                        .background(Rectangle())
-                        .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
-                        .cornerRadius(15)
+                        Text("New Purchase")
+                            .fixedSize()
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.white)
+                            .frame(width: 300, height:100)
+                            .background(Rectangle())
+                            .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
+                            .cornerRadius(15)
                 }
                 .padding(.bottom, 20.0)
                 .shadow(color: Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, radius: 5)
                 
-                NavigationLink{
-                    InventoryView().preferredColorScheme(.light)
+                Button{
+                    //InventoryView().preferredColorScheme(.light)
+                    detailScreen = 1
+                    
+                    visibility = .detailOnly
                 } label:{
                     Text("Inventory")
                         .fixedSize()
@@ -90,8 +100,10 @@ struct ContentView: View {
                 .padding(.bottom, 20.0)
                 .shadow(color: Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, radius: 5)
                 
-                NavigationLink{
-                    TransactionsView().preferredColorScheme(.light)
+                Button{
+                    detailScreen = 2
+                    
+                    visibility = .all
                 } label:{
                     Text("Recent Transactions")
                         .fixedSize()
@@ -115,8 +127,10 @@ struct ContentView: View {
                         .padding(.bottom)
                     
                     HStack{
-                        NavigationLink{
-                            StatisticsView().preferredColorScheme(.light)
+                        Button{
+                            detailScreen = 3
+                            
+                            visibility = .all
                         } label:{
                             Image(systemName: "chart.xyaxis.line")
                                 .fixedSize()
@@ -158,7 +172,22 @@ struct ContentView: View {
             })
         } detail: {
             NavigationStack{
-                TransactionsView().preferredColorScheme(.light)
+                switch detailScreen{
+                case 0:
+                    NewPurchaseView()
+                    
+                case 1:
+                    InventoryView()
+                    
+                case 2:
+                    TransactionsView()
+                    
+                case 3:
+                    StatisticsView()
+                    
+                default:
+                    TransactionsView()
+                }
             }
         }
     }

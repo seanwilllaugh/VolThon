@@ -5,7 +5,7 @@
 //  Created by Sean Laughlin on 2/18/23.
 //
 
-import SwiftUI
+/*import SwiftUI
 import CoreData
 import Foundation
 
@@ -116,4 +116,4 @@ struct PurchaseRow: View {
             chosenSize  = Sizes[0]
         })
     }
-}
+}*/

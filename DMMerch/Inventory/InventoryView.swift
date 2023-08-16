@@ -232,9 +232,3 @@ struct InventoryView: View {
         }
     }
 }
-
-struct InventoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        InventoryView()
-    }
-}

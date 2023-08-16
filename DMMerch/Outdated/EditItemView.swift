@@ -52,22 +52,6 @@ struct EditItemView: View{
     
     @State private var price  = 0
     
-    func seperateColors()->[String]{
-        let colorsConverted = item.colors!
-        
-        let new = colorsConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
-    
-    func seperateSizes()->[String]{
-        let sizesConverted = item.sizes!
-        
-        let new = sizesConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
-    
     func deleteColor(at offsets: IndexSet){
         for offset in offsets {
             colorlist[offset] = ""
@@ -129,8 +113,6 @@ struct EditItemView: View{
         
         item.name  = name
         item.type  = type
-        item.colors = color
-        item.sizes  = size
         item.price = Int16(price)
         item.image = inputImage!.pngData()
         
@@ -239,9 +221,6 @@ struct EditItemView: View{
                 type = item.type!
                 
                 price = Int(item.price)
-                
-                Colors = seperateColors()
-                Sizes  = seperateSizes()
                 
                 colorlist = Colors
                 sizelist  = Sizes

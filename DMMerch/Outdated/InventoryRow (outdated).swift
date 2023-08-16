@@ -4,7 +4,7 @@
 //
 //  Created by Sean Laughlin on 3/2/23.
 //
-
+/*
 import SwiftUI
 
 struct InventoryRow: View {
@@ -104,3 +104,4 @@ struct InventoryRow: View {
         })
     }
 }
+*/

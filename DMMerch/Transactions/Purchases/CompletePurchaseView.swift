@@ -214,6 +214,10 @@ struct CompletePurchaseView: View {
                                 invitem.sold = invitem.sold + Int16(item.itemQuantity!)
                                 print("Sold \(invitem.sold) \(invitem.name!)")
                             }
+                            
+                            if let itemSize = item.size{
+                                itemSize.inventory = itemSize.inventory - Int16(item.itemQuantity!)
+                            }
                         }
                         
                         print("Cart: \(items)")

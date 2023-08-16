@@ -54,7 +54,7 @@ struct TransactionsView: View {
                             .font(.system(size: 24))
                             .fontWeight(.bold)
                         
-                        Text(purchase.purchaseTime)
+                        Text(purchase.purchaseTime ?? "N/A")
                             .padding(.top, 5)
                         
                         Spacer()

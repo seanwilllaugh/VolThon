@@ -13,32 +13,20 @@ struct PurchaseCard: View {
     
     let item: Item
     
-    @State var Sizes  = [String]()
-    @State var Colors = [String]()
     @State var image  = UIImage()
     
     @Binding var Cart  : [cartItem]
     @State var newItem = cartItem()
     
-    @State var selectedColor = ""
-    @State var selectedSize  = ""
+    @State var selectedColor = ItemColor()
+    @State var colorSelected = false
+    
+    @State var selectedSize  = ItemSize()
+    @State var sizeSelected  = false
+    
     @State var selectedAmt   = 0
     
-    func seperateColors()->[String]{
-        let colorsConverted = item.colors!
-        
-        let new = colorsConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
-    
-    func seperateSizes()->[String]{
-        let sizesConverted = item.sizes!
-        
-        let new = sizesConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
+    @State var errorCheck    = false
     
     func loadImage()->UIImage{
         guard UIImage(data: item.image!) != nil else{
@@ -66,7 +54,7 @@ struct PurchaseCard: View {
                             Text(item.name ?? "N/A")
                                 .font(Font.custom("LeagueSpartan-Bold", size: 15))
                                 .foregroundColor(.black)
-                                //.font(.system(size:14))
+                            
                             Text(item.type ?? "N/A")
                                 .font(Font.custom("LeagueSpartan-Bold", size: 13))
                                 .foregroundColor(Color(hex: findHex(color: "Pastel Gray", hexColors: hexColors)) ?? .black)
@@ -151,15 +139,16 @@ struct PurchaseCard: View {
                                                 .font(Font.custom("LeagueSpartan", size: 12))
                                                 .foregroundColor(.black)
                                             HStack{
-                                                ForEach(Colors, id: \.self){ color in
+                                                ForEach(item.colorArray){ color in
                                                     Button{
                                                         selectedColor = color
+                                                        colorSelected = true
                                                     } label: {
                                                         if(selectedColor == color){
                                                             ZStack{
                                                                 Circle()
                                                                     .frame(width: 20, height: 20)
-                                                                    .foregroundColor(Color(hex: findHex(color: color, hexColors: hexColors)) ?? .black)
+                                                                    .foregroundColor(Color(hex: findHex(color: color.colorName!, hexColors: hexColors)) ?? .black)
                                                                 Circle()
                                                                     .strokeBorder(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors)) ?? .black, lineWidth: 2)
                                                                     .frame(width: 20, height: 20)
@@ -168,7 +157,7 @@ struct PurchaseCard: View {
                                                         }else{
                                                             Circle()
                                                                 .frame(width: 20, height: 20)
-                                                                .foregroundColor(Color(hex: findHex(color: color, hexColors: hexColors)) ?? .black)
+                                                                .foregroundColor(Color(hex: findHex(color: color.colorName!, hexColors: hexColors)) ?? .black)
                                                                 .padding(.top, -5)
                                                         }
                                                     }
@@ -179,39 +168,42 @@ struct PurchaseCard: View {
                                                 .foregroundColor(.black)
                                                 .padding(.top, -3)
                                             HStack{
-                                                ForEach(Sizes, id: \.self){ size in
-                                                    Button{
-                                                        selectedSize = size
-                                                    } label: {
-                                                        if(selectedSize == size){
-                                                            ZStack{
-                                                                RoundedRectangle(cornerRadius: 5)
-                                                                    .foregroundColor(Color(hex: findHex(color: "Size Gray", hexColors: hexColors))!)
-                                                                    .frame(width: 20, height: 20)
-                                                                    .padding(.top, -6)
-                                                                    .overlay(
-                                                                        Text(size)
-                                                                            .font(Font.custom("LeagueSpartan", size: 10))
-                                                                            .padding(.bottom, 3)
-                                                                            .foregroundColor(.black)
-                                                                    )
-                                                                RoundedRectangle(cornerRadius: 5)
-                                                                    .stroke(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, lineWidth: 2)
-                                                                    .frame(width: 20, height: 20)
-                                                                    .padding(.top, -6)
-                                                            }
-                                                        }else{
-                                                            ZStack{
-                                                                RoundedRectangle(cornerRadius: 5)
-                                                                    .foregroundColor(Color(hex: findHex(color: "Size Gray", hexColors: hexColors))!)
-                                                                    .frame(width: 20, height: 20)
-                                                                    .padding(.top, -6)
-                                                                    .overlay(
-                                                                        Text(size)
-                                                                            .font(Font.custom("LeagueSpartan", size: 10))
-                                                                            .padding(.bottom, 3)
-                                                                            .foregroundColor(.black)
-                                                                    )
+                                                if let firstColor = item.colorArray.first {
+                                                    ForEach(firstColor.sizeArray){ size in
+                                                        Button{
+                                                            selectedSize = size
+                                                            sizeSelected = true
+                                                        } label: {
+                                                            if(selectedSize == size){
+                                                                ZStack{
+                                                                    RoundedRectangle(cornerRadius: 5)
+                                                                        .foregroundColor(Color(hex: findHex(color: "Size Gray", hexColors: hexColors))!)
+                                                                        .frame(width: 20, height: 20)
+                                                                        .padding(.top, -6)
+                                                                        .overlay(
+                                                                            Text(size.sizeName!)
+                                                                                .font(Font.custom("LeagueSpartan", size: 10))
+                                                                                .padding(.bottom, 3)
+                                                                                .foregroundColor(.black)
+                                                                        )
+                                                                    RoundedRectangle(cornerRadius: 5)
+                                                                        .stroke(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, lineWidth: 2)
+                                                                        .frame(width: 20, height: 20)
+                                                                        .padding(.top, -6)
+                                                                }
+                                                            }else{
+                                                                ZStack{
+                                                                    RoundedRectangle(cornerRadius: 5)
+                                                                        .foregroundColor(Color(hex: findHex(color: "Size Gray", hexColors: hexColors))!)
+                                                                        .frame(width: 20, height: 20)
+                                                                        .padding(.top, -6)
+                                                                        .overlay(
+                                                                            Text(size.sizeName!)
+                                                                                .font(Font.custom("LeagueSpartan", size: 10))
+                                                                                .padding(.bottom, 3)
+                                                                                .foregroundColor(.black)
+                                                                        )
+                                                                }
                                                             }
                                                         }
                                                     }
@@ -235,24 +227,48 @@ struct PurchaseCard: View {
                                 .foregroundColor(.black)
                                 .padding(.bottom, -1)
                             Button{
-                                newItem = AddtoCart(item: item, Quantity: selectedAmt, Color: selectedColor, Size: selectedSize)
-                                Cart.append(newItem)
-                                selectedAmt = 0
-                                selectedColor = ""
-                                selectedSize  = ""
-                                print("Added \(Cart[0].itemQuantity!) \(Cart[0].itemName!)")
+                                if(sizeSelected && colorSelected){
+                                    if(selectedAmt > 0){
+                                        newItem = AddtoCart(item: item, Quantity: selectedAmt, Color: selectedColor, Size: selectedSize)
+                                        Cart.append(newItem)
+                                        selectedAmt = 0
+                                        selectedColor = ItemColor()
+                                        selectedSize  = ItemSize()
+                                        print("Added \(Cart[0].itemQuantity!) \(Cart[0].itemName!)")
+                                        
+                                        errorCheck = false
+                                    }else{
+                                        errorCheck = true
+                                    }
+                                }else{
+                                    errorCheck = true
+                                }
                             } label: {
                                 ZStack{
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors)) ?? .black)
-                                        .overlay(
-                                            ZStack{
-                                                Text("Add to Cart")
-                                                    .font(.system(size: 10))
-                                                    .foregroundColor(.white)
-                                                    .fontWeight(.bold)
-                                            }
-                                        )
+                                    
+                                    if(errorCheck){
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(Color(hex: findHex(color: "Red", hexColors: hexColors)) ?? .black)
+                                            .overlay(
+                                                ZStack{
+                                                    Text("Add to Cart")
+                                                        .font(.system(size: 10))
+                                                        .foregroundColor(.white)
+                                                        .fontWeight(.bold)
+                                                }
+                                            )
+                                    }else{
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors)) ?? .black)
+                                            .overlay(
+                                                ZStack{
+                                                    Text("Add to Cart")
+                                                        .font(.system(size: 10))
+                                                        .foregroundColor(.white)
+                                                        .fontWeight(.bold)
+                                                }
+                                            )
+                                    }
                                 }
                             }
                             .frame(width: 85, height: 30)
@@ -264,15 +280,13 @@ struct PurchaseCard: View {
             )
             .frame(width: 300, height: 210)
             .onAppear(perform: {
-                Colors = seperateColors()
-                Sizes  = seperateSizes()
                 image = loadImage()
             })
             
     }
 }
 
-func AddtoCart(item: Item, Quantity: Int, Color: String, Size: String)->cartItem
+func AddtoCart(item: Item, Quantity: Int, Color: ItemColor, Size: ItemSize)->cartItem
 {
     print("AddtoCart called")
     
@@ -282,15 +296,17 @@ func AddtoCart(item: Item, Quantity: Int, Color: String, Size: String)->cartItem
     purchaseString.append("\(item.name!);")
     purchaseString.append("\(Quantity);")
     purchaseString.append("\(Int(item.price) * Quantity);")
-    purchaseString.append("\(Color);")
-    purchaseString.append("\(Size);")
+    purchaseString.append("\(Color.colorName!);")
+    purchaseString.append("\(Size.sizeName!);")
     
     newItem.itemName     = item.name!
     newItem.itemQuantity = Quantity
     newItem.itemPrice    = Int(item.price) * Quantity
-    newItem.itemColor    = Color
-    newItem.itemSize     = Size
+    newItem.itemColor    = Color.colorName!
+    newItem.itemSize     = Size.sizeName!
     newItem.itemType     = item.type!
+    
+    newItem.size         = Size
     
     return newItem
 }

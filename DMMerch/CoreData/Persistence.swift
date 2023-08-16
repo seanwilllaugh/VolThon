@@ -1,8 +1,8 @@
 //
 //  Persistence.swift
-//  DMMerch
+//  SmartPaws
 //
-//  Created by Sean Laughlin on 2/16/23.
+//  Created by Sean Laughlin on 5/5/23.
 //
 
 import CoreData
@@ -14,7 +14,7 @@ struct PersistenceController {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
+            let items = Item(context: viewContext)
         }
         do {
             try viewContext.save()

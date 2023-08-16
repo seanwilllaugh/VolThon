@@ -2,7 +2,7 @@
 //  Purchase+CoreDataClass.swift
 //  DMMerch
 //
-//  Created by Sean Laughlin on 2/20/23.
+//  Created by Sean Laughlin on 7/25/23.
 //
 //
 

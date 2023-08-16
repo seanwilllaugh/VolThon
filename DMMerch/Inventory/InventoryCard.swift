@@ -10,28 +10,11 @@ import SwiftUI
 struct InventoryCard: View {
     var hexColors = readColors()
     @Environment(\.managedObjectContext) var viewContext
+    @FetchRequest(sortDescriptors: [], animation: .default) var types: FetchedResults<ItemColor>
     
     let item: Item
     
-    @State var Sizes  = [String]()
-    @State var Colors = [String]()
     @State var image  = UIImage()
-    
-    func seperateColors()->[String]{
-        let colorsConverted = item.colors!
-        
-        let new = colorsConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
-    
-    func seperateSizes()->[String]{
-        let sizesConverted = item.sizes!
-        
-        let new = sizesConverted.description.components(separatedBy: ",")
-        
-        return(new)
-    }
     
     func loadImage()->UIImage{
         guard UIImage(data: item.image!) != nil else{
@@ -96,7 +79,7 @@ struct InventoryCard: View {
                                                     .foregroundColor(.black)
                                                     .font(Font.custom("LeagueSpartan", size: 11))
                                                     .offset(y: -4)
-                                                Text("69")
+                                                Text("\(countInventoryTotal(item: item))")
                                                     .foregroundColor(.black)
                                                     .font(Font.custom("LeagueSpartan", size: 15))
                                             }
@@ -123,10 +106,10 @@ struct InventoryCard: View {
                                                 .font(Font.custom("LeagueSpartan", size: 12))
                                                 .foregroundColor(.black)
                                             HStack{
-                                                ForEach(Colors, id: \.self){ color in
+                                                ForEach(item.colorArray){ color in
                                                     Circle()
                                                         .frame(width: 20, height: 20)
-                                                        .foregroundColor(Color(hex: findHex(color: color, hexColors: hexColors)) ?? .black)
+                                                        .foregroundColor(Color(hex: findHex(color: color.colorName!, hexColors: hexColors)) ?? .black)
                                                         .padding(.top, -5)
                                                 }
                                             }
@@ -135,16 +118,18 @@ struct InventoryCard: View {
                                                 .foregroundColor(.black)
                                                 .padding(.top, -3)
                                             HStack{
-                                                ForEach(Sizes, id: \.self){ size in
-                                                    ZStack{
-                                                        RoundedRectangle(cornerRadius: 5)
-                                                            .foregroundColor(Color(hex: findHex(color: "Size Gray", hexColors: hexColors))!)
-                                                            .frame(width: 20, height: 20)
-                                                            .padding(.top, -6)
-                                                        Text(size)
-                                                            .font(Font.custom("LeagueSpartan", size: 10))
-                                                            .padding(.bottom, 5)
-                                                            .foregroundColor(.black)
+                                                if let firstColor = item.colorArray.first {
+                                                    ForEach(firstColor.sizeArray){ size in
+                                                        ZStack{
+                                                            RoundedRectangle(cornerRadius: 5)
+                                                                .foregroundColor(Color(hex: findHex(color: "Size Gray", hexColors: hexColors))!)
+                                                                .frame(width: 20, height: 20)
+                                                                .padding(.top, -6)
+                                                            Text(size.sizeName!)
+                                                                .font(Font.custom("LeagueSpartan", size: 10))
+                                                                .padding(.bottom, 5)
+                                                                .foregroundColor(.black)
+                                                        }
                                                     }
                                                 }
                                             }
@@ -174,7 +159,7 @@ struct InventoryCard: View {
                                         .overlay(
                                             ZStack{
                                                 NavigationLink{
-                                                    DetailView(item: item)
+                                                    ItemDetailView(item: item)
                                                 } label: {
                                                     Text("View More")
                                                         .font(.system(size: 11))
@@ -194,8 +179,6 @@ struct InventoryCard: View {
             )
             .frame(width: 300, height: 210)
             .onAppear(perform: {
-                Colors = seperateColors()
-                Sizes  = seperateSizes()
                 image = loadImage()
             })
             

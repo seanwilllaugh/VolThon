@@ -80,39 +80,38 @@ struct AddItemView: View{
             sizelist.append("OS")
         }
         
-        var i = 0
-        
-        for newsize in sizelist{
-            if(newsize != "")
-            {
-                size += newsize
-                if(i != sizelist.endIndex-1){
-                    size += ","
-                }
-            }
-            i += 1
-        }
-        
-        i = 0
+        newItem.id    = UUID()
+        newItem.name  = name
+        newItem.type  = type
+        newItem.price = Int16(price)
+        newItem.image = inputImage!.pngData()
+        newItem.discontinued = false
+        newItem.tag   = "None"
         
         for newcolor in colorlist{
             if(newcolor != "")
             {
-                color += newcolor
-                if(i != colorlist.endIndex-1){
-                    color += ","
+                let newItemColor = ItemColor(context: viewContext)
+                
+                newItemColor.id = UUID()
+                newItemColor.colorName = newcolor
+                
+                for newsize in sizelist{
+                    if(newsize != "")
+                    {
+                        let newItemSize = ItemSize(context: viewContext)
+                        
+                        newItemSize.id = UUID()
+                        newItemSize.sizeName = newsize
+                        newItemSize.inventory = 0
+                        
+                        newItemColor.addToColorSizes(newItemSize)
+                    }
                 }
+                
+                newItem.addToItemColors(newItemColor)
             }
-            i += 1
         }
-        
-        newItem.id    = UUID()
-        newItem.name  = name
-        newItem.type  = type
-        newItem.colors = color
-        newItem.sizes  = size
-        newItem.price = Int16(price)
-        newItem.image = inputImage!.pngData()
         
         for typeName in types{
             if(type == typeName.name!){
