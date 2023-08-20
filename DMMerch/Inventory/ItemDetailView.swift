@@ -64,9 +64,9 @@ struct ItemDetailView: View {
                 VStack(alignment: .leading){
                     
                     /* Title */
-                    Text("\(item.name!)")
+                    Text("\(item.name ?? "N/A")")
                         .font(Font.custom("LeagueSpartan-Bold", size: 60))
-                    Text("\(item.type!)")
+                    Text("\(item.type ?? "N/A")")
                         .font(Font.custom("LeagueSpartan-Bold", size: 40))
                         .foregroundColor(.gray)
                     

@@ -226,52 +226,66 @@ struct PurchaseCard: View {
                                 .font(Font.custom("LeagueSpartan-Bold", size: 24))
                                 .foregroundColor(.black)
                                 .padding(.bottom, -1)
-                            Button{
-                                if(sizeSelected && colorSelected){
-                                    if(selectedAmt > 0){
-                                        newItem = AddtoCart(item: item, Quantity: selectedAmt, Color: selectedColor, Size: selectedSize)
-                                        Cart.append(newItem)
-                                        selectedAmt = 0
-                                        selectedColor = ItemColor()
-                                        selectedSize  = ItemSize()
-                                        print("Added \(Cart[0].itemQuantity!) \(Cart[0].itemName!)")
-                                        
-                                        errorCheck = false
+                            
+                            if(countInventoryTotal(item: item) <= 0){
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(Color(hex: findHex(color: "Pastel Gray", hexColors: hexColors)) ?? .black)
+                                    .overlay(
+                                        ZStack{
+                                            Text("Add to Cart")
+                                                .font(.system(size: 10))
+                                                .foregroundColor(.white)
+                                                .fontWeight(.bold)
+                                        }
+                                    )
+                                    .frame(width: 85, height: 30)
+                            }else{
+                                Button{
+                                    if(sizeSelected && colorSelected){
+                                        if(selectedAmt > 0){
+                                            newItem = AddtoCart(item: item, Quantity: selectedAmt, Color: selectedColor, Size: selectedSize)
+                                            Cart.append(newItem)
+                                            selectedAmt = 0
+                                            selectedColor = ItemColor()
+                                            selectedSize  = ItemSize()
+                                            print("Added \(Cart[0].itemQuantity!) \(Cart[0].itemName!)")
+                                            
+                                            errorCheck = false
+                                        }else{
+                                            errorCheck = true
+                                        }
                                     }else{
                                         errorCheck = true
                                     }
-                                }else{
-                                    errorCheck = true
-                                }
-                            } label: {
-                                ZStack{
-                                    
-                                    if(errorCheck){
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .foregroundColor(Color(hex: findHex(color: "Red", hexColors: hexColors)) ?? .black)
-                                            .overlay(
-                                                ZStack{
-                                                    Text("Add to Cart")
-                                                        .font(.system(size: 10))
-                                                        .foregroundColor(.white)
-                                                        .fontWeight(.bold)
-                                                }
-                                            )
-                                    }else{
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors)) ?? .black)
-                                            .overlay(
-                                                ZStack{
-                                                    Text("Add to Cart")
-                                                        .font(.system(size: 10))
-                                                        .foregroundColor(.white)
-                                                        .fontWeight(.bold)
-                                                }
-                                            )
+                                } label: {
+                                    ZStack{
+                                        if(errorCheck){
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .foregroundColor(Color(hex: findHex(color: "Red", hexColors: hexColors)) ?? .black)
+                                                .overlay(
+                                                    ZStack{
+                                                        Text("Add to Cart")
+                                                            .font(.system(size: 10))
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                    }
+                                                )
+                                        }else{
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors)) ?? .black)
+                                                .overlay(
+                                                    ZStack{
+                                                        Text("Add to Cart")
+                                                            .font(.system(size: 10))
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                    }
+                                                )
+                                        }
                                     }
                                 }
+                                .frame(width: 85, height: 30)
                             }
-                            .frame(width: 85, height: 30)
                         }
                         .frame(height: 85)
                         .padding(.trailing)

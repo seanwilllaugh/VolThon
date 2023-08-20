@@ -88,25 +88,27 @@ struct CompletePurchase: View {
                             
                             HStack{
                                 VStack(alignment: .leading){
-                                    RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
-                                        .opacity(0.1)
-                                        .frame(width: 150, height: 30)
-                                        .overlay(
-                                            ZStack{
-                                                RoundedRectangle(cornerRadius: 10)
-                                                    .stroke(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, lineWidth: 2)
-                                                
-                                                TextField("First Name", text: $buyerFirstName)
-                                                    .font(Font.custom("LeagueSpartan", size: 14))
-                                                    .padding(.leading, 5)
-                                            }
-                                        )
-                                    
-                                    Text("First Name")
-                                        .font(Font.custom("LeagueSpartan-Bold", size: 10))
-                                        .foregroundColor(.gray)
-                                        .padding(.leading, 5)
+                                    VStack(alignment: .leading){
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
+                                            .opacity(0.1)
+                                            .frame(width: 150, height: 30)
+                                            .overlay(
+                                                ZStack{
+                                                    RoundedRectangle(cornerRadius: 10)
+                                                        .stroke(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!, lineWidth: 2)
+                                                    
+                                                    TextField("First Name", text: $buyerFirstName)
+                                                        .font(Font.custom("LeagueSpartan", size: 14))
+                                                        .padding(.leading, 5)
+                                                }
+                                            )
+                                        
+                                        Text("First Name")
+                                            .font(Font.custom("LeagueSpartan-Bold", size: 10))
+                                            .foregroundColor(.gray)
+                                            .padding(.leading, 5)
+                                    }
                                 }
                                 
                                 VStack(alignment: .leading){
