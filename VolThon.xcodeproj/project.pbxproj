@@ -43,7 +43,7 @@
 		51E432A729A1A3E800D60D33 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E432A629A1A3E800D60D33 /* TransactionsView.swift */; };
 		51E432AC29A1A80700D60D33 /* PurchaseRow (outdated).swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E432AB29A1A80700D60D33 /* PurchaseRow (outdated).swift */; };
 		51E432AE29A322FE00D60D33 /* CartItemStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E432AD29A322FE00D60D33 /* CartItemStruct.swift */; };
-		51E432B029A3D20200D60D33 /* CompletePurchaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E432AF29A3D20200D60D33 /* CompletePurchaseView.swift */; };
+		51E432B029A3D20200D60D33 /* CompletePurchaseView (outdated).swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E432AF29A3D20200D60D33 /* CompletePurchaseView (outdated).swift */; };
 		51E8969C2A717FDC0098E5AD /* ItemSize+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E896962A717FDC0098E5AD /* ItemSize+CoreDataClass.swift */; };
 		51E8969D2A717FDC0098E5AD /* ItemSize+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E896972A717FDC0098E5AD /* ItemSize+CoreDataProperties.swift */; };
 		51E8969E2A717FDC0098E5AD /* ItemColor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51E896982A717FDC0098E5AD /* ItemColor+CoreDataClass.swift */; };
@@ -98,7 +98,7 @@
 		51E432A629A1A3E800D60D33 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 		51E432AB29A1A80700D60D33 /* PurchaseRow (outdated).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PurchaseRow (outdated).swift"; sourceTree = "<group>"; };
 		51E432AD29A322FE00D60D33 /* CartItemStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartItemStruct.swift; sourceTree = "<group>"; };
-		51E432AF29A3D20200D60D33 /* CompletePurchaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletePurchaseView.swift; sourceTree = "<group>"; };
+		51E432AF29A3D20200D60D33 /* CompletePurchaseView (outdated).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompletePurchaseView (outdated).swift"; sourceTree = "<group>"; };
 		51E896962A717FDC0098E5AD /* ItemSize+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemSize+CoreDataClass.swift"; sourceTree = "<group>"; };
 		51E896972A717FDC0098E5AD /* ItemSize+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemSize+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		51E896982A717FDC0098E5AD /* ItemColor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ItemColor+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -149,9 +149,7 @@
 			children = (
 				51E432A429A1A3DA00D60D33 /* NewPurchaseView.swift */,
 				515B776F2A5F0F1500908626 /* PurchaseCard.swift */,
-				51E432AF29A3D20200D60D33 /* CompletePurchaseView.swift */,
 				51E896B82A7E9BCD0098E5AD /* CompletePurchase.swift */,
-				51E432AD29A322FE00D60D33 /* CartItemStruct.swift */,
 			);
 			path = Purchases;
 			sourceTree = "<group>";
@@ -164,6 +162,7 @@
 				516FEB4329CA18740082E9FB /* Image Processing.swift */,
 				51A3166829B07E5D000D74A5 /* HexColors.swift */,
 				51E896A82A77F0FA0098E5AD /* CountInventory.swift */,
+				51E432AD29A322FE00D60D33 /* CartItemStruct.swift */,
 				51E896AE2A782B910098E5AD /* ItemPurchaseSearch.swift */,
 			);
 			path = "Back-End";
@@ -271,6 +270,7 @@
 		51E896B72A796EBE0098E5AD /* Outdated */ = {
 			isa = PBXGroup;
 			children = (
+				51E432AF29A3D20200D60D33 /* CompletePurchaseView (outdated).swift */,
 				513F96B8299FD12700E9DCC2 /* AddItemView (outdated).swift */,
 				51A3166629B07431000D74A5 /* InventoryRow (outdated).swift */,
 				51E432AB29A1A80700D60D33 /* PurchaseRow (outdated).swift */,
@@ -364,7 +364,7 @@
 				51089B662A6ED80200C56105 /* ItemDetailView.swift in Sources */,
 				51089B922A704A4C00C56105 /* DMMerch.xcdatamodeld in Sources */,
 				517C72132A699FCD0066AF09 /* TypesView.swift in Sources */,
-				51E432B029A3D20200D60D33 /* CompletePurchaseView.swift in Sources */,
+				51E432B029A3D20200D60D33 /* CompletePurchaseView (outdated).swift in Sources */,
 				51E896B92A7E9BCD0098E5AD /* CompletePurchase.swift in Sources */,
 				51ACFCC92A8E7750006B1C43 /* AddItem.swift in Sources */,
 				51BCA799299E912300F746E8 /* ContentView.swift in Sources */,

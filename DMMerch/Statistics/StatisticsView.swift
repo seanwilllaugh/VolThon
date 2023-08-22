@@ -27,12 +27,6 @@ struct StatisticsView: View {
     @State private var showingCSVExport = false
     
     var body: some View {
-        Text("Performance Overview")
-            .font(.title)
-            .fontDesign(.rounded)
-            .fontWeight(.bold)
-            .padding(.leading)
-            .frame(maxWidth: .infinity, alignment: .leading)
         
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
@@ -51,7 +45,9 @@ struct StatisticsView: View {
                                     .overlay(
                                         VStack {
                                             Text("Total Orders")
+                                                .font(Font.custom("LeagueSpartan", size: 20))
                                             Text("\(purchases.count)")
+                                                .font(Font.custom("LeagueSpartan", size: 20))
                                         }
                                         .foregroundColor(.black)
                                     )
@@ -63,7 +59,9 @@ struct StatisticsView: View {
                                     .overlay(
                                         VStack {
                                             Text("Items Sold")
+                                                .font(Font.custom("LeagueSpartan", size: 20))
                                             Text("\(totalItemsPurch)")
+                                                .font(Font.custom("LeagueSpartan", size: 20))
                                         }
                                         .foregroundColor(.black)
                                     )
@@ -74,7 +72,9 @@ struct StatisticsView: View {
                                     .overlay(
                                         VStack {
                                             Text("Items Sold")
+                                                .font(Font.custom("LeagueSpartan", size: 20))
                                             Text("\(totalItemsPurch)")
+                                                .font(Font.custom("LeagueSpartan", size: 20))
                                         }
                                         .foregroundColor(.black)
                                     )
@@ -89,9 +89,8 @@ struct StatisticsView: View {
                                     ForEach(types) { type in
                                         VStack {
                                             Text(type.name!)
-                                                .font(.system(size: 15))
-                                                .fontDesign(.rounded)
-                                                .foregroundColor(Color(hex: findHex(color: "Gray", hexColors: hexColors))!)
+                                                .font(Font.custom("LeagueSpartan-Bold", size: 16))
+                                                .foregroundColor(.gray)
                                             Text("\(type.typeSales)")
                                                 .font(.system(size: 20))
                                                 .fontDesign(.rounded)
@@ -118,9 +117,7 @@ struct StatisticsView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             Text("Sales Over Time")
-                                .font(.title2)
-                                .fontWeight(.medium)
-                                .fontDesign(.rounded)
+                                .font(Font.custom("LeagueSpartan-Bold", size: 28))
                                 .padding(.leading)
                                 .frame(width: 500, height: 25, alignment: .leading)
                             Spacer()
@@ -154,21 +151,19 @@ struct StatisticsView: View {
                         VStack(alignment: .leading) {
                             Spacer()
                             Text("Best Selling Items")
-                                .font(.title2)
-                                .fontWeight(.medium)
-                                .fontDesign(.rounded)
+                                .font(Font.custom("LeagueSpartan-Bold", size: 28))
                                 .padding(.leading)
                                 .frame(width: 500, height: 25, alignment: .leading)
                             Spacer()
                             HStack {
                                 Text("Item Price")
-                                    .fontWeight(.medium)
+                                    .font(Font.custom("LeagueSpartan-Bold", size: 20))
                                     .frame(width: 100, alignment: .center)
                                 Text("Item Name & Type")
-                                    .fontWeight(.medium)
+                                    .font(Font.custom("LeagueSpartan-Bold", size: 20))
                                     .frame(width: 230, alignment: .leading)
                                 Text("Amount Sold")
-                                    .fontWeight(.medium)
+                                    .font(Font.custom("LeagueSpartan-Bold", size: 20))
                                     .frame(width: 120, alignment: .center)
                             }
                             .padding(.leading)  
@@ -184,12 +179,14 @@ struct StatisticsView: View {
                                                         .foregroundColor(Color(hex: findHex(color: "Pastel Orange", hexColors: hexColors))!)
                                                         .frame(width: 40, height: 40)
                                                     Text("$\(item.price)")
+                                                        .font(Font.custom("LeagueSpartan-Bold", size: 18))
                                                         .foregroundColor(.white)
                                                 }
                                                 .frame(width: 100, alignment: .center)
                                                 
                                                 VStack(alignment: .leading) {
                                                     Text(item.name!)
+                                                        .font(Font.custom("LeagueSpartan-Bold", size: 18))
                                                     Text(item.type!)
                                                         .font(.caption)
                                                         .foregroundColor(.gray)
@@ -263,6 +260,7 @@ struct StatisticsView: View {
             }
             .frame(width: 300)
         }
+        .navigationTitle("Performance Overview").font(Font.custom("LeagueSpartan-Bold", size: 42))
         .onAppear(perform: {
             sortedItems = items.sorted(by: { $0.sold > $1.sold })
             sortedPurchases = purchases.sorted(by: { $0.top! < $1.top! })

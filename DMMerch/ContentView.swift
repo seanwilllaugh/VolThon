@@ -20,9 +20,10 @@ struct ContentView: View {
     
     @State private var visibility: NavigationSplitViewVisibility = .all
     
-    @State var Total      = 0
-    @State var cashTotal  = 0
-    @State var venmoTotal = 0
+    @State var Total       = 0
+    @State var cashTotal   = 0
+    @State var venmoTotal  = 0
+    @State var donordTotal = 0
     
     let hexColors = readColors()
     
@@ -45,7 +46,7 @@ struct ContentView: View {
                 .padding(.trailing)
             VStack {
                 Text("Total: $\(Total)")
-                    .font(.largeTitle)
+                    .font(Font.custom("LeagueSpartan", size: 30))
                     .padding(.bottom)
                     .offset(y:-20)
                 
@@ -55,11 +56,19 @@ struct ContentView: View {
                         .foregroundColor(.green)
                         .frame(width: 20, height: 20)
                     Text("Cash: $\(cashTotal)")
+                        .font(Font.custom("LeagueSpartan", size: 12))
                     Spacer()
                     Circle()
                         .foregroundColor(.blue)
                         .frame(width: 20, height: 20)
                     Text("Venmo: $\(venmoTotal)")
+                        .font(Font.custom("LeagueSpartan", size: 12))
+                    Spacer()
+                    Circle()
+                        .foregroundColor(.purple)
+                        .frame(width: 20, height: 20)
+                    Text("DonorDrive: $\(donordTotal)")
+                        .font(Font.custom("LeagueSpartan", size: 12))
                     Spacer()
                 }
                 //.padding(.bottom, 20.0)
@@ -165,6 +174,10 @@ struct ContentView: View {
                     if(purchase.method == "Venmo")
                     {
                         venmoTotal += Int(purchase.totalPrice)
+                    }
+                    
+                    if(purchase.method == "DonorDrive"){
+                        donordTotal += Int(purchase.totalPrice)
                     }
                     
                     Total = cashTotal + venmoTotal
